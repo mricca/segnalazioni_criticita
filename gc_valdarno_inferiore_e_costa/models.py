@@ -143,7 +143,7 @@ class Segnalazione(gismodels.Model):
     nota_risposta = gismodels.FileField(upload_to='documents/nota_risposta/%Y/%m/%d',blank=True, null=True, db_column='nota_risp')
     
     # OPZIONALE DI DEFAULT
-    documenti_collegati = gismodels.FileField(upload_to='documents/documenti_collegati/%Y/%m/%d',blank=True, null=True, db_column='doc_coll')
+    #documenti_collegati = gismodels.FileField(upload_to='documents/documenti_collegati/%Y/%m/%d',blank=True, null=True, db_column='doc_coll')
     
     # OBBLIGATORIO DI DEFAULT
     desc_sint_crit = gismodels.TextField(blank=False, null=True, db_column='desc_sint_crit', verbose_name='Descrizione sintetica della criticità')

@@ -267,7 +267,7 @@ def export_pdf_single(modeladmin, request, queryset, cod = None):
             allproducts.append([smart_str(u"note"),Paragraph(smart_str(obj.note),style)])
             allproducts.append([smart_str(u"relazione_sopralluogo"),Paragraph(smart_str(obj.relazione_sopralluogo),style)])
             allproducts.append([smart_str(u"nota_risposta"),Paragraph(smart_str(obj.nota_risposta),style)])
-            allproducts.append([smart_str(u"documenti_collegati"),Paragraph(smart_str(obj.documenti_collegati),style)])
+            #allproducts.append([smart_str(u"documenti_collegati"),Paragraph(smart_str(obj.documenti_collegati),style)])
             allproducts.append([smart_str(u"stato_istruttoria"),Paragraph(smart_str(obj.stato_istruttoria),style)])
             allproducts.append([smart_str(u"data_inizio_istruttoria"),Paragraph(smart_str(obj.data_inizio_istruttoria),style)])
             allproducts.append([smart_str(u"data_fine_istruttoria"),Paragraph(smart_str(obj.data_fine_istruttoria),style)])
@@ -334,7 +334,7 @@ def export_pdf(modeladmin, request, queryset):
         allproducts.append([smart_str(u"note"),Paragraph(smart_str(obj.note),style)])
         allproducts.append([smart_str(u"relazione_sopralluogo"),Paragraph(smart_str(obj.relazione_sopralluogo),style)])
         allproducts.append([smart_str(u"nota_risposta"),Paragraph(smart_str(obj.nota_risposta),style)])
-        allproducts.append([smart_str(u"documenti_collegati"),Paragraph(smart_str(obj.documenti_collegati),style)])
+        #allproducts.append([smart_str(u"documenti_collegati"),Paragraph(smart_str(obj.documenti_collegati),style)])
         allproducts.append([smart_str(u"stato_istruttoria"),Paragraph(smart_str(obj.stato_istruttoria),style)])
         allproducts.append([smart_str(u"data_inizio_istruttoria"),Paragraph(smart_str(obj.data_inizio_istruttoria),style)])
         allproducts.append([smart_str(u"data_fine_istruttoria"),Paragraph(smart_str(obj.data_fine_istruttoria),style)])
@@ -410,7 +410,7 @@ def export_csv(modeladmin, request, queryset):
         smart_str(u"note"),
         smart_str(u"relazione_sopralluogo"),
         smart_str(u"nota_risposta"),
-        smart_str(u"documenti_collegati"),
+        #smart_str(u"documenti_collegati"),
         smart_str(u"stato_istruttoria"),
         smart_str(u"data_inizio_istruttoria"),
         smart_str(u"data_fine_istruttoria"),
@@ -448,7 +448,7 @@ def export_csv(modeladmin, request, queryset):
             smart_str(obj.note),
             smart_str(obj.relazione_sopralluogo),
             smart_str(obj.nota_risposta),
-            smart_str(obj.documenti_collegati),
+            #smart_str(obj.documenti_collegati),
             smart_str(obj.stato_istruttoria),
             smart_str(obj.data_inizio_istruttoria),
             smart_str(obj.data_fine_istruttoria),
@@ -496,7 +496,7 @@ def export_xls(modeladmin, request, queryset):
         (u"note", 8000),
         (u"relazione_sopralluogo", 8000),
         (u"nota_risposta", 8000),
-        (u"documenti_collegati", 8000),
+        #(u"documenti_collegati", 8000),
         (u"stato_istruttoria", 8000),
         (u"data_inizio_istruttoria", 8000),
         (u"data_fine_istruttoria", 8000),
@@ -541,7 +541,7 @@ def export_xls(modeladmin, request, queryset):
             smart_str(obj.note),
             smart_str(obj.relazione_sopralluogo),
             smart_str(obj.nota_risposta),
-            smart_str(obj.documenti_collegati),
+            #smart_str(obj.documenti_collegati),
             smart_str(obj.stato_istruttoria),
             smart_str(obj.data_inizio_istruttoria),
             smart_str(obj.data_fine_istruttoria),
@@ -730,7 +730,7 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 [
                 'relazione_sopralluogo',
                 'nota_risposta',
-                'documenti_collegati',
+                #'documenti_collegati',
                 ]
             }
         ),
@@ -763,6 +763,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
         'data_fine_istruttoria',
         'email_sent',
     )
+    
+    #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
+    search_fields = ['prot_arrivo']
+    
+    list_per_page = 20
+    list_max_show_all = 100
     
     list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','oggetto_segnalazione','stato_istruttoria',]
 

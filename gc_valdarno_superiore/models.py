@@ -143,7 +143,7 @@ class Segnalazione(gismodels.Model):
     nota_risposta = gismodels.FileField(upload_to='documents/nota_risposta/%Y/%m/%d',blank=True, null=True, db_column='nota_risp')
     
     # OPZIONALE DI DEFAULT
-    documenti_collegati = gismodels.FileField(upload_to='documents/documenti_collegati/%Y/%m/%d',blank=True, null=True, db_column='doc_coll')
+    #documenti_collegati = gismodels.FileField(upload_to='documents/documenti_collegati/%Y/%m/%d',blank=True, null=True, db_column='doc_coll')
     
     # OBBLIGATORIO DI DEFAULT
     desc_sint_crit = gismodels.TextField(blank=False, null=True, db_column='desc_sint_crit', verbose_name='Descrizione sintetica della criticità')
@@ -194,6 +194,12 @@ class DocumentazioneCollegataVs(models.Model):
     class Meta:
         db_table = 'documentazione_vs'   
         verbose_name_plural = "Documentazione Collegata"
- 
+           
     def __unicode__(self):
         return self.tipo_doc
+
+    def documento_collegato_segnalazione(self):
+       try:
+           return ",".join(map(lambda c: c.tipo_doc ,  self.relate.codice_segnalazione.all()))
+       except Exception, e : 
+           return "Error:%s" % str(e) 

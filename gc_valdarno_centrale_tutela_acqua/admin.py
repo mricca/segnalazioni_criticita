@@ -764,8 +764,14 @@ class SegnalazioneAdmin(GeoModelAdmin):
         'email_sent',
     )
     
+    #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
+    search_fields = ['prot_arrivo']
+    
+    list_per_page = 20
+    list_max_show_all = 100
+    
     list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','oggetto_segnalazione','stato_istruttoria',]
-
+    
     inlines = [DocumentazioneCollegataVcInline]
     
     def save_model(self, request, obj, form, change):
