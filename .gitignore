@@ -1,0 +1,22 @@
+syntax: glob
+# generic
+*.pyc
+*.swp
+*.swo
+
+# folder
+portale_segnalazioni/settings.py
+prova_lamma/*
+portale_segnalazioni/static/olwidget/js/extjs-5.1.1/*
+portale_segnalazioni/static/olwidget/js/geoext2/*
+portale_segnalazioni/static/olwidget/js/openlayers/*
+portale_segnalazioni/static/olwidget/js/proj4js/*
+portale_segnalazioni/static/olwidget/js/resources/*
+
+# other
+celerybeat-schedule
+pip-requirements-local.txt
+gc_*/migrations
+settore_*/migrations
+*.ini
+*~

@@ -1,0 +1,14 @@
+.gx-popup {
+    overflow: visible;
+}
+
+.gx-popup-anc:before,
+.gx-popup-anc:after {
+    content: ' ';
+    z-index: 1;
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 16px solid transparent;
+    display: block;
+}

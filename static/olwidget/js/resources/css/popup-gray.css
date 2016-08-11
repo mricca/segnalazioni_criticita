@@ -1,0 +1,26 @@
+@import "popup.css";
+
+.gx-popup-anc-top:before {
+    top: -33px;
+    border-bottom-color: #a9a9a9;
+}
+.gx-popup-anc-top:after {
+    top: -32px;
+    border-bottom-color: #e8e8e8;
+}
+.gx-popup-anc-bottom:before {
+    bottom: -33px;
+    border-top-color: #a9a9a9;
+}
+.gx-popup-anc-bottom:after {
+    bottom: -32px;
+    border-top-color: #e8e8e8;
+}
+.gx-popup-anc-left:before,
+.gx-popup-anc-left:after {
+    left: 4px;
+}
+.gx-popup-anc-right:before,
+.gx-popup-anc-right:after {
+    right: 4px;
+}

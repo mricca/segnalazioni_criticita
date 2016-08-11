@@ -1,0 +1,62 @@
+<div id="{{ id }}" ></div>
+{{ layer_html|join:"" }}
+<script type="text/javascript">
+
+    Ext.require([
+        //'Ext.Window', // useless in fact, since we're using ext-all.js in the example
+        'GeoExt.panel.Map',
+        'GeoExt.form.field.GeocoderComboBox',        
+        'GeoExt.window.Popup'
+    ]);
+
+    Ext.application({
+        name: 'GeocoderComboBox GeoExt2',
+        launch: function() {
+            OpenLayers.ProxyHost = "/cgi-bin/proxy.cgi?url=";
+            {{ setup_custom_layer_types|safe }}
+            
+            var locationLayer = new OpenLayers.Layer.Vector("Location", {
+                styleMap: new OpenLayers.Style({
+                    externalGraphic: "../../resources/images/default/anchor-access.png",
+                    graphicYOffset: -25,
+                    graphicHeight: 25,
+                    graphicTitle: "${name}"
+                })
+            });
+            
+            var map = new olwidget.Map("{{ id }}", [
+                    {{ layer_js|join:"," }}
+                ], 
+                {{ map_opts|safe }}
+            );
+            
+            var olwidget_{{ id }} = Ext.create('GeoExt.panel.Map', {
+                title: 'Visualizzazione Segnalazioni',
+                renderTo: "{{ id }}",
+                collapsible: false,
+                border: true,
+                //autoWidth: true,
+                width: 900,
+                height: 900,
+                map:map,
+                tbar: [{
+                    xtype: "gx_geocodercombo",
+                    fieldStyle: "width: 100%;border: none;",
+                    layer: locationLayer,
+                    emptyText: "Cerca...",
+                    //url: "https://nominatim.openstreetmap.org/search?format=json&countrycodes=it&viewboxlbrt=10,42,12,45&bounded=1",
+                    url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=10,42,12,45&&countrycodes=it",
+                    zoom: 8,
+                    queryDelay: 200,
+                    // To restrict the search to a bounding box, uncomment the following
+                    // line and change the viewboxlbrt parameter to a left,bottom,right,top
+                    // bounds in EPSG:4326:
+                    //url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=15,47,17,49",
+                    width: 300
+                }]
+            });
+        }
+    });
+    
+</script>
+

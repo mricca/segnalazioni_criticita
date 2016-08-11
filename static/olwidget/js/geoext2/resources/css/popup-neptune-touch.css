@@ -1,0 +1,20 @@
+@import "popup.css";
+
+.gx-popup-anc-top:before,
+.gx-popup-anc-top:after {
+    top: -37px;
+    border-bottom-color: #3892d3;
+}
+.gx-popup-anc-bottom:before,
+.gx-popup-anc-bottom:after {
+    bottom: -37px;
+    border-top-color: #3892d3;
+}
+.gx-popup-anc-left:before,
+.gx-popup-anc-left:after {
+    left: 0;
+}
+.gx-popup-anc-right:before,
+.gx-popup-anc-right:after {
+    right: 0;
+}

@@ -1,0 +1,26 @@
+Django==1.9.6
+Pillow==2.4.0
+amqp==1.4.6
+anyjson==0.3.3
+billiard==3.3.0.20
+celery==3.1.18
+-e git+https://github.com/hellpanderrr/django-admin-bootstrapped-1.9-compatible@2d5b01f2d6b512b42fd6c4d579c48257cddfea7a#egg=django_admin_bootstrapped-master
+django-attachments==1.0.1
+django-bootstrap3==6.1.0
+django-easy-select2==1.3.3
+django-file-resubmit==0.4.3
+django-filebrowser==3.7.1
+django-grappelli==2.8.1
+django-olwidget==0.61.0
+-e git+https://github.com/digi604/django-smart-selects.git@2ecfe8857d3ceee302d5045a6dd9c3c747b98c35#egg=django_smart_selects-master
+django-sslify-admin==0.3
+django-tabbed-admin==0.0.5
+kombu==3.0.26
+meld3==1.0.2
+psycopg2==2.5.3
+pytz==2015.4
+redis==2.10.3
+reportlab==3.1.8
+requests==2.7.0
+wsgiref==0.1.2
+xlwt==0.7.5
