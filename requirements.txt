@@ -12,9 +12,10 @@ django-file-resubmit==0.4.3
 django-filebrowser==3.7.1
 django-grappelli==2.8.1
 django-olwidget==0.61.0
+django-polymorphic==0.9.2
 -e git+https://github.com/digi604/django-smart-selects.git@2ecfe8857d3ceee302d5045a6dd9c3c747b98c35#egg=django_smart_selects-master
 django-sslify-admin==0.3
-django-tabbed-admin==0.0.5
+django-tabbed-admin==1.0.0
 kombu==3.0.26
 meld3==1.0.2
 psycopg2==2.5.3
