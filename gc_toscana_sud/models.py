@@ -86,6 +86,7 @@ class Comuni(models.Model):
     
     class Meta:
         db_table = 'comuni'
+        ordering = ['nom_com']
  
     def __unicode__(self):
         return self.nom_com

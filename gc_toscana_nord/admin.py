@@ -23,6 +23,7 @@ from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django.contrib.gis import admin
 from olwidget.admin import GeoModelAdmin
+from tabbed_admin import TabbedModelAdmin
 from django.contrib.gis.gdal import *
 from django.contrib.gis.geos import GEOSGeometry, Point
 #from ajax_select import make_ajax_form
@@ -571,7 +572,7 @@ class DocumentazioneCollegataTnInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Segnalazione)    
-class SegnalazioneAdmin(GeoModelAdmin):
+class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
     
     model = Segnalazione
     
@@ -684,10 +685,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
         'default_lat': 5387778.59347,
         'defaultZoom': 1,
     }
-
-    fieldsets = [
+    
+    inlines = [DocumentazioneCollegataTnInline]
+    
+    tab_descrizione_istruttoria = [
         (
-        'DESCRIZIONE ISTRUTTORIA', 
+        'Descrizione istruttoria', 
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'codice_segnalazione',
@@ -702,8 +705,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 'set_reg_comp',
                 ]
             }
-        ),(
-        'INFORMAZIONI GEOGRAFICHE', 
+        )
+    ]
+    
+    tab_informazioni_geografiche = [
+        (
+        'Informazioni geografiche', 
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'bacino_idrografico',
@@ -714,8 +721,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 'segnalazione_aggiunta',
                 ]
             }
-        ),(
-        'INFORMAZIONI AGGIUNTIVE', 
+        )
+    ]
+    
+    tab_informazioni_aggiuntive = [
+        (
+        'Informazioni aggiuntive', 
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'inserimento_dods',
@@ -726,8 +737,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 'note',
                 ]
             }
-        ),(
-        'CHIUSURA ISTRUTTORIA', 
+        )
+    ]
+    
+    tab_chiusura_istruttoria = [
+        (
+        'Chiusura istruttoria', 
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'relazione_sopralluogo',
@@ -736,8 +751,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 ]
             }
         ),
-        ("DOCUMENTAZIONE COLLEGATA", {"classes": ("placeholder documentazionecollegatatn_set-group",), "fields" : ()}),(
-        'STATO ISTRUTTORIA', 
+        DocumentazioneCollegataTnInline
+    ]
+    
+    tab_stato_istruttoria = [
+        (
+        'Stato istruttoria', 
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'stato_istruttoria',
@@ -745,9 +764,17 @@ class SegnalazioneAdmin(GeoModelAdmin):
                 'data_fine_istruttoria',
                 ]
             }
-        ),
+        )
     ]
-
+    
+    tabs = [
+        ('DESCRIZIONE ISTRUTTORIA', tab_descrizione_istruttoria),
+        ('INFORMAZIONI GEOGRAFICHE', tab_informazioni_geografiche),
+        ('INFORMAZIONI AGGIUNTIVE', tab_informazioni_aggiuntive),
+        ('CHIUSURA ISTRUTTORIA', tab_chiusura_istruttoria),
+        ('STATO ISTRUTTORIA', tab_stato_istruttoria)
+    ]
+    
     readonly_fields = [
         'codice_segnalazione',
         'stato_istruttoria',
@@ -760,6 +787,8 @@ class SegnalazioneAdmin(GeoModelAdmin):
         'data_prot_arrivo',
         'prot_arrivo',
         'oggetto_segnalazione',
+        'comune',
+        'nominativo_segnalazione',
         'stato_istruttoria',
         'data_inizio_istruttoria',
         'data_fine_istruttoria',
@@ -767,14 +796,12 @@ class SegnalazioneAdmin(GeoModelAdmin):
     )
     
     #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
-    search_fields = ['prot_arrivo']
+    search_fields = ['prot_arrivo','comune__nom_com','nominativo_segnalazione',]
     
     list_per_page = 20
     list_max_show_all = 100
     
-    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','oggetto_segnalazione','stato_istruttoria',]
-
-    inlines = [DocumentazioneCollegataTnInline]
+    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione',]
     
     def save_model(self, request, obj, form, change):
         queryset = Segnalazione.objects.all()

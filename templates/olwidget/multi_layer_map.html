@@ -32,27 +32,42 @@
             
             var olwidget_{{ id }} = Ext.create('GeoExt.panel.Map', {
                 title: 'Visualizzazione Segnalazioni',
+                header: true,
                 renderTo: "{{ id }}",
                 collapsible: false,
                 border: true,
                 //autoWidth: true,
-                width: 900,
-                height: 900,
+                width: 800,
+                height: 700,
+                forceLayout: true,
                 map:map,
-                tbar: [{
-                    xtype: "gx_geocodercombo",
-                    fieldStyle: "width: 100%;border: none;",
-                    layer: locationLayer,
-                    emptyText: "Cerca...",
-                    //url: "https://nominatim.openstreetmap.org/search?format=json&countrycodes=it&viewboxlbrt=10,42,12,45&bounded=1",
-                    url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=10,42,12,45&&countrycodes=it",
-                    zoom: 8,
-                    queryDelay: 200,
-                    // To restrict the search to a bounding box, uncomment the following
-                    // line and change the viewboxlbrt parameter to a left,bottom,right,top
-                    // bounds in EPSG:4326:
-                    //url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=15,47,17,49",
-                    width: 300
+                listeners: {
+                    afterrender : function(panel) {
+                        var header = panel.header;
+                        header.setHeight(35);
+                        panel.doLayout();
+                    }
+                },
+                dockedItems: [{
+                    xtype: 'toolbar',
+                    dock: 'top',
+                    items: [{
+                        xtype: "gx_geocodercombo",
+                        fieldStyle: "width: 100%;border: none;",
+                        layer: locationLayer,
+                        deferredRender: false,
+                        emptyText: "Cerca...",
+                        //url: "https://nominatim.openstreetmap.org/search?format=json&countrycodes=it&viewboxlbrt=10,42,12,45&bounded=1",
+                        url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=10,42,12,45&&countrycodes=it",
+                        zoom: 8,
+                        queryDelay: 200,
+                        // To restrict the search to a bounding box, uncomment the following
+                        // line and change the viewboxlbrt parameter to a left,bottom,right,top
+                        // bounds in EPSG:4326:
+                        //url: "https://nominatim.openstreetmap.org/search?format=json&viewboxlbrt=15,47,17,49",
+                        width: 300,
+                        height: 25
+                    }]
                 }]
             });
         }
