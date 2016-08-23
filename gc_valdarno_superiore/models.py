@@ -97,39 +97,39 @@ class Segnalazione(gismodels.Model):
     codice_segnalazione = gismodels.CharField(max_length=20, unique=True, blank=False, primary_key=True, editable=False, db_column='codsegn')
     
     # OBBLIGATORIO DI DEFAULT
-    data_prot_arrivo = gismodels.DateField(blank=True, null=True, db_column='data_prot_arr', verbose_name="Data protocollo di arrivo")
+    data_prot_arrivo = gismodels.DateField(blank=True, null=True, db_column='data_prot_arr',db_index=True, verbose_name="Data protocollo di arrivo")
     
     # OBBLIGATORIO DI DEFAULT
-    prot_arrivo = gismodels.CharField(blank=True, null=True, verbose_name="Protocollo di arrivo", max_length=100,db_column='prot_arrivo', help_text='Max 100 caratteri')
+    prot_arrivo = gismodels.CharField(blank=True, null=True, verbose_name="Protocollo di arrivo", max_length=100,db_column='prot_arrivo',db_index=True, help_text='Max 100 caratteri')
     
     # GEOMETRIA PUNTUALE
     segnalazione_aggiunta = gismodels.PointField(srid=3003,db_index=True,db_column='geom',blank=True, null=True)
     objects = gismodels.GeoManager()
     
     # OBBLIGATORIO DI DEFAULT
-    oggetto_segnalazione = gismodels.ForeignKey(OggettoSegnalazione, blank=False, null=True, related_name='oggetto_segnalazione_gc_valdarno_superiore', db_column='ogg_segn')
+    oggetto_segnalazione = gismodels.ForeignKey(OggettoSegnalazione, blank=False, null=True, related_name='oggetto_segnalazione_gc_valdarno_superiore',db_index=True, db_column='ogg_segn')
     
     # OBBLIGATORIO DI DEFAULT
     nota_segnalazione = gismodels.FileField(upload_to='documents/note_segnalazione/%Y/%m/%d',blank=False, null=True, db_column='nota_segn')
     
     # OBBLIGATORIO DI DEFAULT
-    nominativo_segnalazione = gismodels.CharField(blank=False, null=True, verbose_name="Nominativo Segnalazione", max_length=100,db_column='nominativo_s', help_text='Max 100 caratteri')
+    nominativo_segnalazione = gismodels.CharField(blank=False, null=True, verbose_name="Nominativo Segnalazione",db_index=True, max_length=100,db_column='nominativo_s', help_text='Max 100 caratteri')
     
     # OBBLIGATORIO DI DEFAULT
-    corso_viabilita = gismodels.CharField(blank=True, null=True, verbose_name="Corso d'acqua / Viabilità / Versante", max_length=100,db_column='corso_via', help_text='Max 100 caratteri')
+    corso_viabilita = gismodels.CharField(blank=True, null=True, verbose_name="Corso d'acqua / Viabilità / Versante",db_index=True, max_length=100,db_column='corso_via', help_text='Max 100 caratteri')
     
     # OBBLIGATORIO DI DEFAULT
-    bacino_idrografico = gismodels.ForeignKey(Bacini, blank=True, null=True, related_name='bacini_gc_valdarno_superiore', db_column='bacidro', help_text='Bacino idrografico L 183/1989')
+    bacino_idrografico = gismodels.ForeignKey(Bacini, blank=True, null=True, related_name='bacini_gc_valdarno_superiore', db_column='bacidro',db_index=True, help_text='Bacino idrografico L 183/1989')
     
     # OBBLIGATORIO DI DEFAULT
-    provincia = gismodels.ForeignKey(Province, blank=True, null=True, related_name='provincia_gc_valdarno_superiore')
+    provincia = gismodels.ForeignKey(Province, blank=True, null=True,db_index=True, related_name='provincia_gc_valdarno_superiore')
     
     # OBBLIGATORIO DI DEFAULT
     #comune = gismodels.ForeignKey(Comuni, blank=False, null=True, related_name='comune_lamma')
-    comune = ChainedForeignKey(Comuni, chained_field="provincia", chained_model_field="cod_prov",show_all=False, auto_choose=True, blank=True, null=True, related_name='comune_settore_assetto_idrogeologico')
+    comune = ChainedForeignKey(Comuni, chained_field="provincia", chained_model_field="cod_prov",show_all=False, auto_choose=True, blank=True, null=True,db_index=True, related_name='comune_settore_assetto_idrogeologico')
     
     # OBBLIGATORIO DI DEFAULT
-    localita = gismodels.CharField(blank=True, null=True, verbose_name="Località", max_length=100,db_column='localita', help_text='Max 100 caratteri')
+    localita = gismodels.CharField(blank=True, null=True, verbose_name="Località", max_length=100,db_column='localita',db_index=True, help_text='Max 100 caratteri')
     
     # OBBLIGATORIO DI DEFAULT
     motivo_segnalazione = gismodels.ForeignKey(MotivoSegnalazione, blank=False, null=True, related_name='motivo_segnalazione_gc_valdarno_superiore', db_column='mot_segn')

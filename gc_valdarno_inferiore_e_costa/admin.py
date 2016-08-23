@@ -42,7 +42,7 @@ from django.utils.encoding import force_text
 register = template.Library()
 from django.http import QueryDict
 
-from prova_lamma.tasks import send_feedback_email_task
+#from prova_lamma.tasks import send_feedback_email_task
 from celery import uuid
 from celery.task.control import revoke
 import uuid as uuidp
@@ -760,6 +760,7 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
                 'stato_istruttoria',
                 'data_inizio_istruttoria',
                 'data_fine_istruttoria',
+                'email_sent',
                 ]
             }
         )
@@ -778,6 +779,7 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
         'stato_istruttoria',
         'data_inizio_istruttoria',
         'data_fine_istruttoria',
+        'email_sent',
     ]
 
     list_display = (
@@ -786,20 +788,21 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
         'prot_arrivo',
         'oggetto_segnalazione',
         'comune',
+        'localita',
+        'corso_viabilita',
         'nominativo_segnalazione',
         'stato_istruttoria',
         'data_inizio_istruttoria',
         'data_fine_istruttoria',
-        'email_sent',
     )
     
     #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
-    search_fields = ['prot_arrivo','comune__nom_com','nominativo_segnalazione',]
+    search_fields = ['prot_arrivo','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita',]
     
     list_per_page = 20
     list_max_show_all = 100
     
-    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione',]
+    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','email_sent','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita',]
     
     def save_model(self, request, obj, form, change):
         queryset = Segnalazione.objects.all()
