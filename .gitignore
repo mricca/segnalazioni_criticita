@@ -6,6 +6,7 @@ syntax: glob
 
 # folder
 portale_segnalazioni/settings.py
+send_mail_segnalazioni_script/connessione.py
 prova_lamma/*
 portale_segnalazioni/static/olwidget/js/extjs-5.1.1/*
 portale_segnalazioni/static/olwidget/js/geoext2/*
