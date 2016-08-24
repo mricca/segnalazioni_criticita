@@ -19,5 +19,6 @@ celerybeat-schedule
 pip-requirements-local.txt
 gc_*/migrations
 settore_*/migrations
+difesa_*/migrations
 *.ini
 *~
