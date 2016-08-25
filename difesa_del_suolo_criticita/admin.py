@@ -25,6 +25,7 @@ from django.forms.models import BaseInlineFormSet
 from django.core.exceptions import ValidationError
 from django.contrib.gis import admin
 from olwidget.admin import GeoModelAdmin
+#from leaflet.admin import LeafletGeoAdmin
 from tabbed_admin import TabbedModelAdmin
 from django.contrib.gis.gdal import *
 from django.contrib.gis.geos import GEOSGeometry, Point
