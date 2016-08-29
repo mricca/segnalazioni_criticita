@@ -107,7 +107,7 @@ def nota_risposta_user_directory_path(instance, filename):
 
 def documento_collegato_user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'documents/utente_{user}/documento_collegato/{Y}/{m}/{d}/{uploadFile}'.format(Y=strftime('%Y'),m=strftime('%m'),d=strftime('%d'),user=User.objects.filter(utente_ds=instance.relate)[0], uploadFile=filename)
+    return 'documents/utente_{user}/documenti_collegati/{Y}/{m}/{d}/{uploadFile}'.format(Y=strftime('%Y'),m=strftime('%m'),d=strftime('%d'),user=User.objects.filter(utente_ds=instance.relate)[0], uploadFile=filename)
 
 class Segnalazione(gismodels.Model):
     
@@ -206,8 +206,8 @@ class Segnalazione(gismodels.Model):
 
 class DocumentazioneCollegata(models.Model):
     tipo_doc = gismodels.CharField(blank=True, null=True, verbose_name="Tipologia Documento", max_length=100,db_column='tipo_doc', help_text='Max 100 caratteri')
-    documento_collegato = gismodels.FileField(upload_to=documento_collegato_user_directory_path,blank=True, null=True, db_column='doc_coll')
-    relate = gismodels.ForeignKey(Segnalazione, db_column='segn_fk', blank=False, null=True, to_field='codice_segnalazione')
+    documenti_collegati = gismodels.FileField(upload_to=documento_collegato_user_directory_path,blank=True, null=True, db_column='doc_coll')
+    relate = gismodels.ForeignKey(Segnalazione, db_column='segn_fk', blank=False, null=True, db_index=True, to_field='codice_segnalazione')
     
     class Meta:
         db_table = 'documentazione'   

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 python2.7 /opt/PORTALE_SEGNALAZIONI/portale_segnalazioni/send_mail_segnalazioni_script/send_mail_segnalazioni_prova_lamma.py
+python2.7 /opt/PORTALE_SEGNALAZIONI/portale_segnalazioni/send_mail_segnalazioni_script/send_mail_segnalazioni_criticita.py
 python2.7 /opt/PORTALE_SEGNALAZIONI/portale_segnalazioni/send_mail_segnalazioni_script/send_mail_segnalazioni_assetto_idrogeo.py
 python2.7 /opt/PORTALE_SEGNALAZIONI/portale_segnalazioni/send_mail_segnalazioni_script/send_mail_segnalazioni_protezione_civile.py
 python2.7 /opt/PORTALE_SEGNALAZIONI/portale_segnalazioni/send_mail_segnalazioni_script/send_mail_segnalazioni_toscana_nord.py

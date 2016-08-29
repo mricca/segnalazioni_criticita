@@ -1,3 +1,9 @@
+-- backup database
+--Backup:  $ pg_dump -U {user-name} {source_db} -f {dumpfilename.sql}
+--Restore: $ psql -U {user-name} -d {desintation_db}-f {dumpfilename.sql}
+
+pg_dump -U postgres portale_segnalazioni -f portale_segnalazioni_backup_20160825.sql
+
 -- oggetto_segnalazione L 183/1989
 INSERT INTO oggetto_segnalazione (id, text) VALUES ('01', 'Criticità Idraulica');
 INSERT INTO oggetto_segnalazione (id, text) VALUES ('02', 'Frana');

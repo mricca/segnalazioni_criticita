@@ -575,7 +575,7 @@ class DocumentazioneCollegataInline(admin.TabularInline):
     classes = ('grp-collapse grp-open',)
     extra = 1
 
-#@admin.register(Segnalazione)    
+@admin.register(Segnalazione)    
 class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
     
     model = Segnalazione
@@ -804,7 +804,7 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
     #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
     search_fields = ['prot_arrivo','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita',]
     
-    list_per_page = 20
+    list_per_page = 50
     list_max_show_all = 100
     
     list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','email_sent','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita','utente',]
@@ -816,14 +816,29 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
             return qs
         else:
             return qs.filter(utente = request.user)
-            
+    
     def save_model(self, request, obj, form, change):
+        
+        def get_user_suffix(x):
+            return {
+                'valdarno_superiore': 'VS',
+                'toscana_nord': 'TN',            
+                'valdarno_inferiore': 'VI',
+                'toscana_sud': 'TS',
+                'valdarno_centrale': 'VC',
+                'assetto_idrogeo': 'AI',
+                'protezione_civile': 'PC',
+                'admin': 'DS',
+            }.get(x, 'DS')
+
         queryset = Segnalazione.objects.all()
         current_year = timezone.now().year
-        #codLen = len(obj.codice_segnalazione)        
+        suffisso = get_user_suffix(request.user.username)
+
         if not queryset:
             #codice_segnalazione = 'DA' + '2014' + 'DS' + '0001'
-            codice_segnalazione = 'SEGN-' + 'DS' + '2016' + '00001'
+            #codice_segnalazione = 'SEGN-' + 'DS' + current_year + '00001'
+            codice_segnalazione = 'SEGN-' + suffisso + str(current_year) + '00001'
             obj.codice_segnalazione = codice_segnalazione
             obj.utente = request.user
             obj.save(force_insert=True)
@@ -837,7 +852,8 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
             ultimo_codice_segnalazione_count_int = int(ultimo_codice_segnalazione_count)
             ultimo = ['{i:0{width}}'.format(i=i, width=5) for i in range(ultimo_codice_segnalazione_count_int+1, ultimo_codice_segnalazione_count_int+2)]
 
-            codice_segnalazione = 'SEGN-' + 'DS' + '2016' + ultimo[0]
+            #codice_segnalazione = 'SEGN-' + 'DS' + current_year + ultimo[0]
+            codice_segnalazione = 'SEGN-' + suffisso + str(current_year) + ultimo[0]
 
             list = []
             for index in range(len(lista_codice_segnalazione)):
@@ -864,4 +880,4 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
     
     has_delete_permission = has_change_permission
     
-admin.site.register(Segnalazione, SegnalazioneAdmin)
+#admin.site.register(Segnalazione, SegnalazioneAdmin)
