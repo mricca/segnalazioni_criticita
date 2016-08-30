@@ -64,7 +64,7 @@ def py_mail(SUBJECT, BODY, TO, FROM, BCC):
 def doQuery( conn ) :
 
     TO = 'geniocivile.toscananord@regione.toscana.it'
-    FROM ='dbsegnalazioni_lamma.rete.toscana.it'
+    FROM ='dbsegnalazioni@lamma.rete.toscana.it'
     BCC = 'mari@lamma.rete.toscana.it'
     
     cur = conn.cursor()

@@ -76,7 +76,7 @@ def get_user_suffix(x):
 def doQuery( conn ) :
 
     #TO = 'assettoidrogeologico@regione.toscana.it'
-    FROM ='dbsegnalazioni_lamma.rete.toscana.it'
+    FROM ='dbsegnalazioni@lamma.rete.toscana.it'
     BCC = 'mari@lamma.rete.toscana.it'
     
     cur = conn.cursor()

@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 #!/usr/local/bin/python2.7
+# -*- coding: utf-8 -*-
 
 import sys
 import psycopg2
@@ -80,17 +80,17 @@ def doQuery( conn ) :
         oggi = datetime.now().date()
         giorniScadenza = (dataProtocollo - oggi) + timedelta(days=30)
 
-        email_content = "Segnalazione n° "+codsegn+"\r\rIn relazione alla segnalazione in oggetto si comunica che in data odierna è stato oltrepassato il termine dei 30 giorni dall'apertura dell'istruttoria.\rTale istruttoria è stata aperta in data "+str(data_prot_arr)+" con protocollo "+prot_arrivo+".\rSe ne sollecita pertanto il completamento entro la prossima settimana.\r\r------\rCordiali salutiLa Direzione"
+        email_content = "Segnalazione nÂ° "+codsegn+"\r\rIn relazione alla segnalazione in oggetto si comunica che in data odierna Ã¨ stato oltrepassato il termine dei 30 giorni dall'apertura dell'istruttoria.\rTale istruttoria Ã¨ stata aperta in data "+str(data_prot_arr)+" con protocollo "+prot_arrivo+".\rSe ne sollecita pertanto il completamento entro la prossima settimana.\r\r------\rCordiali salutiLa Direzione"
         
         #FORSE IL CONSTROLLO PUO' ESSERE FATTO ANCHE UTILIZZANDO IL CAMPO STATO ISTRUTTORIA
         if (giorniScadenza.total_seconds() <= 0.0 and data_fine_istr is None and email_sent == False):
             secondiScadenza = 0.0
-            py_mail("Segnalazione n° " + codsegn, email_content, TO, FROM, BCC)
+            py_mail("Segnalazione nÂ° " + codsegn, email_content, TO, FROM, BCC)
             cur.execute("UPDATE prova_lamma_segnalazione set email_sent = TRUE where codsegn='"+codsegn+"'");
 
             conn.commit()
             print 'Email spedita: Numero giorni alla scadenza: ' + str(dataProtocollo) + " -> " + str(giorniScadenza)
-            logger.info("- Email spedita al referente della segnalazione n: "+codsegn+". Tale istruttoria è stata aperta in data "+str(data_prot_arr)+" con protocollo "+prot_arrivo+".")
+            logger.info("- Email spedita al referente della segnalazione n: "+codsegn+". Tale istruttoria Ã¨ stata aperta in data "+str(data_prot_arr)+" con protocollo "+prot_arrivo+".")
         #else:
         #    secondiScadenza = giorniScadenza.total_seconds()
         #    print 'Numero giorni alla scadenza: ' + str(dataProtocollo) + " -> " + str(giorniScadenza)
