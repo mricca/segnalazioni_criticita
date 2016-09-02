@@ -27,6 +27,7 @@ from django.contrib.gis import admin
 from olwidget.admin import GeoModelAdmin
 #from leaflet.admin import LeafletGeoAdmin
 from tabbed_admin import TabbedModelAdmin
+from reversion.admin import VersionAdmin
 from django.contrib.gis.gdal import *
 from django.contrib.gis.geos import GEOSGeometry, Point
 #from ajax_select import make_ajax_form
@@ -576,7 +577,7 @@ class DocumentazioneCollegataInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Segnalazione)    
-class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
+class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
     
     model = Segnalazione
     
