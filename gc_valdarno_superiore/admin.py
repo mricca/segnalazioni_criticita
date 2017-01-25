@@ -80,6 +80,7 @@ class CronoprogrammaAdminForm(forms.ModelForm):
           'desc_sint_int': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'note': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'oggetto_segnalazione': apply_select2(forms.Select),
+          'tipologia_richiesta': apply_select2(forms.Select),
           'bacino_idrografico': apply_select2(forms.Select),
           #'provincia': apply_select2(forms.Select),
           #'comune': apply_select2(forms.Select),
@@ -692,6 +693,7 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'codice_segnalazione',
+                'tipologia_richiesta',
                 'oggetto_segnalazione',
                 'data_prot_arrivo',
                 'prot_arrivo',

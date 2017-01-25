@@ -69,6 +69,7 @@ def get_user_suffix(x):
             'valdarno_centrale': 'geniocivile.valdarnocentrale@regione.toscana.it',
             'assetto_idrogeo': 'assettoidrogeologico@regione.toscana.it',
             'protezione_civile': 'protezionecivile.toscana@regione.toscana.it',
+            'settore_idrologico': 'settore.idrologico@regione.toscana.it',
             'admin': 'assettoidrogeologico@regione.toscana.it',
         }.get(x, 'assettoidrogeologico@regione.toscana.it')
         

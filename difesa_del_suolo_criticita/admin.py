@@ -27,7 +27,7 @@ from django.contrib.gis import admin
 from olwidget.admin import GeoModelAdmin
 #from leaflet.admin import LeafletGeoAdmin
 from tabbed_admin import TabbedModelAdmin
-from reversion.admin import VersionAdmin
+#from reversion.admin import VersionAdmin
 from django.contrib.gis.gdal import *
 from django.contrib.gis.geos import GEOSGeometry, Point
 #from ajax_select import make_ajax_form
@@ -85,6 +85,7 @@ class CronoprogrammaAdminForm(forms.ModelForm):
           'desc_sint_int': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'note': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'oggetto_segnalazione': apply_select2(forms.Select),
+          'tipologia_richiesta': apply_select2(forms.Select),
           'bacino_idrografico': apply_select2(forms.Select),
           #'provincia': apply_select2(forms.Select),
           #'comune': apply_select2(forms.Select),
@@ -577,7 +578,8 @@ class DocumentazioneCollegataInline(admin.TabularInline):
     extra = 1
 
 @admin.register(Segnalazione)    
-class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
+#class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
+class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
     
     model = Segnalazione
     
@@ -654,11 +656,16 @@ class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
 
     def get_actions(self, request):
         actions = super(SegnalazioneAdmin, self).get_actions(request)
-        if request.user.is_superuser == False:
+        if request.user.is_superuser == False and request.user.username != 'difesa_suolo':
             if 'export_csv' in actions:
                 del actions['export_csv']
             if 'export_xls' in actions:
-                del actions['export_xls']                
+                del actions['export_xls']
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
+        if request.user.username == 'difesa_suolo':
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
         return actions 
         
     form = CronoprogrammaAdminForm
@@ -697,6 +704,7 @@ class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'codice_segnalazione',
+                'tipologia_richiesta',
                 'oggetto_segnalazione',
                 'data_prot_arrivo',
                 'prot_arrivo',
@@ -799,21 +807,26 @@ class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
         'stato_istruttoria',
         'data_inizio_istruttoria',
         'data_fine_istruttoria',
-        'utente',
+        'get_name',
     )
     
     #search_fields = ['bacino_idrografico__text', 'prot_arrivo']
     search_fields = ['prot_arrivo','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita',]
     
-    list_per_page = 50
-    list_max_show_all = 100
-    
-    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','email_sent','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita','utente',]
+    list_per_page = 20
+    list_max_show_all = 10000
+            
+    list_filter = ['data_prot_arrivo','data_inizio_istruttoria','data_fine_istruttoria','email_sent','oggetto_segnalazione','stato_istruttoria','comune__nom_com','nominativo_segnalazione','localita','corso_viabilita','utente__last_name',]
     exclude = ['utente']
 
+    def get_name(self, obj):
+        return obj.utente.last_name
+    get_name.admin_order_field  = 'utente'  #Allows column order sorting
+    get_name.short_description = 'Utente'  #Renames column head
+    
     def get_queryset(self, request):
         qs = super(SegnalazioneAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.username == 'difesa_suolo':
             return qs
         else:
             return qs.filter(utente = request.user)
@@ -829,6 +842,7 @@ class SegnalazioneAdmin(VersionAdmin, TabbedModelAdmin, GeoModelAdmin):
                 'valdarno_centrale': 'VC',
                 'assetto_idrogeo': 'AI',
                 'protezione_civile': 'PC',
+                'settore_idrologico': 'IR',
                 'admin': 'DS',
             }.get(x, 'DS')
 

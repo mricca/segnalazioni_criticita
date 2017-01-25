@@ -15,8 +15,95 @@ from smart_selects.db_fields import ChainedForeignKey
 from smart_selects.db_fields import GroupedForeignKey
 from django.contrib.auth.models import User
 import uuid
-from prova_lamma.models import Bacini, OggettoSegnalazione, MotivoSegnalazione, InserimentoDODS, SettoreRegComp, Province, Comuni
+#from prova_lamma.models import TipologiaRichiesta
+
 # Create your models here.
+class TipologiaRichiesta(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'tipologia_richiesta'
+ 
+    def __unicode__(self):
+        return self.text 
+        
+class OggettoSegnalazione(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'oggetto_segnalazione'
+ 
+    def __unicode__(self):
+        return self.text 
+
+class MotivoSegnalazione(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'motivo_segnalazione'
+ 
+    def __unicode__(self):
+        return self.text
+
+class InserimentoDODS(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'inserimento_dods'
+ 
+    def __unicode__(self):
+        return self.text
+
+class SettoreRegComp(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    
+    class Meta:
+        db_table = 'set_reg_comp'
+ 
+    def __unicode__(self):
+        return self.text
+
+class Bacini(models.Model):
+    id = models.CharField(max_length=2, unique=True, blank=False, primary_key=True, editable=False)
+    text = models.CharField(max_length=30)
+    email = models.CharField(max_length=200)
+    
+    class Meta:
+        db_table = 'bacini'
+ 
+    def __unicode__(self):
+        return self.text
+
+class Province(models.Model):
+    cod_prov =  models.CharField(max_length=3, unique=True, blank=False, primary_key=True, editable=False)
+    nome_prov = models.CharField(max_length=40)
+    sigla_prov = models.CharField(max_length=2)
+    
+    class Meta:
+        db_table = 'province'   
+ 
+    def __unicode__(self):
+        return self.sigla_prov
+
+class Comuni(models.Model):
+    nom_com = models.CharField(max_length=40)
+    cod_com =  models.CharField(max_length=6, unique=True, blank=False, primary_key=True, editable=False)
+    nome_prov = models.CharField(max_length=40)
+    cod_prov = models.ForeignKey(Province)
+    sigla_prov = models.CharField(max_length=2)
+    
+    class Meta:
+        db_table = 'comuni'
+        ordering = ['nom_com']
+ 
+    def __unicode__(self):
+        return self.nom_com
 
 def nota_segnalazione_user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -38,6 +125,9 @@ class Segnalazione(gismodels.Model):
     #uuid_cod = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     # OBBLIGATORIO DI DEFAULT
     codice_segnalazione = gismodels.CharField(max_length=20, unique=True, blank=False, null=False, editable=False, db_column='codsegn')
+    
+    # OBBLIGATORIO DI DEFAULT
+    tipologia_richiesta = gismodels.ForeignKey(TipologiaRichiesta, blank=True, null=True, related_name='tipologia_richiesta_ds',db_index=True, db_column='tipo_rich')
     
     # OBBLIGATORIO DI DEFAULT
     data_prot_arrivo = gismodels.DateField(blank=True, null=True, db_column='data_prot_arr',db_index=True, verbose_name="Data protocollo di arrivo")

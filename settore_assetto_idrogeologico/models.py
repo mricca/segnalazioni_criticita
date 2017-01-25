@@ -11,7 +11,7 @@ from django.forms.widgets import NullBooleanSelect
 from django.utils.translation import ugettext_lazy
 from smart_selects.db_fields import ChainedForeignKey 
 from smart_selects.db_fields import GroupedForeignKey
-#from prova_lamma.models import Bacini, OggettoSegnalazione, MotivoSegnalazione, InserimentoDODS, SettoreRegComp, Province, Comuni
+from prova_lamma.models import TipologiaRichiesta
 
 # Create your models here.
 class OggettoSegnalazione(models.Model):
@@ -95,6 +95,9 @@ class Segnalazione(gismodels.Model):
     
     # OBBLIGATORIO DI DEFAULT
     codice_segnalazione = gismodels.CharField(max_length=20, unique=True, blank=False, primary_key=True, editable=False, db_column='codsegn')
+
+    # OBBLIGATORIO DI DEFAULT
+    tipologia_richiesta = gismodels.ForeignKey(TipologiaRichiesta, blank=True, null=True, related_name='tipologia_richiesta_settore_assetto_idrogeologico',db_index=True, db_column='tipo_rich')
     
     # OBBLIGATORIO DI DEFAULT
     data_prot_arrivo = gismodels.DateField(blank=True, null=True, db_column='data_prot_arr',db_index=True, verbose_name="Data protocollo di arrivo")

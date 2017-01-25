@@ -1,13 +1,14 @@
 -- 1 admin
 -- 2 consorzio_lamma
--- 3 valdarno_superiore
--- 4 toscana_nord
--- 5 valdarno_inferiore
--- 6 toscana_sud
--- 7 valdarno_centrale
--- 8 assetto_idrogeo
--- 9 protezione_civile
--- 10 difesa_suolo
+-- 3 valdarno_superiore - vs
+-- 4 toscana_nord - tn
+-- 5 valdarno_inferiore - vi
+-- 6 toscana_sud - ts
+-- 7 valdarno_centrale - vc
+-- 8 assetto_idrogeo - ai
+-- 9 protezione_civile - pc
+-- 10 difesa_suolo - ds
+-- 19 settore_idrologico - ir
 
 -- UPDATE difesa_del_suolo_criticita_segnalazione
 -- SET nota_segn = REPLACE(nota_segn, 'documents/note_segnalazione', 'documents/utente_toscana_nord/note_segnalazione'),
@@ -47,7 +48,8 @@ INSERT INTO difesa_del_suolo_criticita_segnalazione (
   ogg_segn,
   provincia_id,
   set_reg_comp,
-  utente_id
+  utente_id,
+  tipo_rich
         )
 SELECT codsegn,
     data_prot_arr,
@@ -78,8 +80,9 @@ SELECT codsegn,
     ogg_segn,
     provincia_id,
     set_reg_comp,
-    3
-FROM gc_valdarno_superiore_segnalazione
+    19,
+    tipo_rich
+FROM settore_idrologico_regionale_segnalazione
 ORDER BY codsegn;
 
 -- UPDATE DOCUMNTAZIONE
@@ -92,4 +95,4 @@ SELECT
   tipo_doc,
   doc_coll,
   segn_fk
-FROM documentazione_vs;
+FROM documentazione_ir;

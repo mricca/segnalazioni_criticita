@@ -4,6 +4,17 @@
 
 pg_dump -U postgres portale_segnalazioni -f portale_segnalazioni_backup_20160825.sql
 
+
+-- tipologia_richiesta
+INSERT INTO tipologia_richiesta (id, text) VALUES ('01', 'Interrogazioni consiliari');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('02', 'Mozioni consiliari');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('03', 'Lettera/mail del Presidente');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('04', 'Richieste Assessorato');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('05', 'Richieste Direzione');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('06', 'Richieste degli EE.LL direttamente al settore');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('07', 'Richieste di privati direttamente al Settore');
+INSERT INTO tipologia_richiesta (id, text) VALUES ('08', 'Altro');
+
 -- oggetto_segnalazione L 183/1989
 INSERT INTO oggetto_segnalazione (id, text) VALUES ('01', 'Criticità Idraulica');
 INSERT INTO oggetto_segnalazione (id, text) VALUES ('02', 'Frana');
@@ -24,6 +35,7 @@ INSERT INTO set_reg_comp (id, text, email) VALUES ('VC', 'Genio Civile Valdarno 
 INSERT INTO set_reg_comp (id, text, email) VALUES ('VI', 'Genio Civile Valdarno Inferiore E Costa', '');
 INSERT INTO set_reg_comp (id, text, email) VALUES ('VS', 'Genio Civile Valdarno Superiore', '');
 INSERT INTO set_reg_comp (id, text, email) VALUES ('PC', 'Settore Protezione Civile E Riduzione Del Rischio Alluvioni', '');
+INSERT INTO set_reg_comp (id, text, email) VALUES ('IR', 'Settore Idrologico Regionale', '');
 
 -- Bacino idrografico L 183/1989
 INSERT INTO bacini (id, text, email) VALUES ('01', 'Arno', '');

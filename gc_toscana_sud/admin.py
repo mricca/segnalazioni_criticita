@@ -80,6 +80,7 @@ class CronoprogrammaAdminForm(forms.ModelForm):
           'desc_sint_int': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'note': forms.Textarea(attrs={'rows':2, 'cols':80}),
           'oggetto_segnalazione': apply_select2(forms.Select),
+          'tipologia_richiesta': apply_select2(forms.Select),
           'bacino_idrografico': apply_select2(forms.Select),
           #'provincia': apply_select2(forms.Select),
           #'comune': apply_select2(forms.Select),
@@ -98,7 +99,7 @@ class CronoprogrammaAdminForm(forms.ModelForm):
             raise forms.ValidationError(_('Non puoi chiudere l\'istruttoria se non hai compilato questo campo'), code='invalid')
         elif data_prot_arrivo is None and oggetto_segnalazione != "04" and self.request.POST.__contains__(u'_save_and_investigation_not_completed'):
             raise forms.ValidationError(_('Non puoi aprire l\'istruttoria se non hai compilato questo campo'), code='invalid')
-        return data_prot_arrivo
+            return data_prot_arrivo
         
     def clean_prot_arrivo(self):
         prot_arrivo = self.cleaned_data['prot_arrivo'].strip()
@@ -693,6 +694,7 @@ class SegnalazioneAdmin(TabbedModelAdmin, GeoModelAdmin):
             {'classes': ('grp-collapse grp-open',),'fields': 
                 [
                 'codice_segnalazione',
+                'tipologia_richiesta',
                 'oggetto_segnalazione',
                 'data_prot_arrivo',
                 'prot_arrivo',
